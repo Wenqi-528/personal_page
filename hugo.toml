@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://wenqi-zhou.netlify.app/'
 languageCode = 'zh-CN'
 title = 'Wenqi_Zhou的个人page'
 theme = 'ananke'
