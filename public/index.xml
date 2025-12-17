@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wenqi_Zhou的个人page</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Wenqi_Zhou的个人page</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 17 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fin-SQL-Optimizer: 金融 Text-to-SQL 的 CoT 蒸馏实践</title>
+      <link>http://localhost:1313/projects/cotprojects/</link>
+      <pubDate>Wed, 17 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/cotprojects/</guid>
+      <description>通过端到端思维链（CoT）构造方案，配合工业级 SQL 执行沙箱校验，实现了从逻辑推导到结果验证的完整闭环，显著提升了模型在复杂金融场景下的 SQL 生成准确率。</description>
+    </item>
+    <item>
+      <title>关于我</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Sat, 20 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;h1 id=&#34;周文琪-wenqi-zhou&#34;&gt;周文琪 (Wenqi Zhou)&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Financial AI Model Analyst | AI Product Manager&lt;/strong&gt; 📍 深圳/上海 | 📧 &lt;a href=&#34;mailto:wenqi_zhou@outlook.com&#34;&gt;wenqi_zhou@outlook.com&lt;/a&gt; |&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-职业总结-summary&#34;&gt;🌟 职业总结 (Summary)&lt;/h2&gt;&#xA;&lt;p&gt;深耕金融垂直领域的大模型应用专家。具备从 &lt;strong&gt;AI 战略规划、产品 Owner 到模型训练部署&lt;/strong&gt; 的全链路经验。擅长在严监管环境下设计并落地生成式 AI、NLP 及多智能体系统（Multi-Agent），致力于通过大模型能力驱动业务 ROI 增长。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-核心亮点-professional-highlights&#34;&gt;🏆 核心亮点 (Professional Highlights)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;效率革命&lt;/strong&gt;：通过 AI + 自动化流程，将行内业务查询耗时降低 &lt;strong&gt;92%&lt;/strong&gt;。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;全链掌控&lt;/strong&gt;：主导了针对资产负债表数据集（20万+行）的 &lt;strong&gt;LoRA/SFT/GRPO&lt;/strong&gt; 微调与部署。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;合规专利&lt;/strong&gt;：拥有授权专利《基于 LLM 的金融场景智能体编排与风险控制系统》。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;跨域协同&lt;/strong&gt;：成功驱动跨 3 个地区的 IT、数据与合规团队完成 AI 产品交付。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-职业经历&#34;&gt;💼 职业经历&lt;/h2&gt;&#xA;&lt;h3 id=&#34;招商银行-china-merchant-bank--system-development-analyst&#34;&gt;&lt;strong&gt;招商银行 (China Merchant Bank)&lt;/strong&gt; | System Development Analyst&lt;/h3&gt;&#xA;&lt;p&gt;&lt;em&gt;2022.05 - 至今 | 深圳&lt;/em&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;WHY NLP2SQL Assistant&lt;/strong&gt;: 主导设计并部署了 NLP2SQL 助手，结合 AI 与规则引擎，提升业务查询效率 92%。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Seraph Project&lt;/strong&gt;: 负责大模型全生命周期管理，主导 20 万行资产负债表数据的 SFT/GRPO 微调与评估。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;产品战略与合规&lt;/strong&gt;: 定义内部 AI 工作流路线图，将 &lt;strong&gt;CSRC 合规检查&lt;/strong&gt;与数据隐私保护集成至 AI 流程中。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;赋能训练&lt;/strong&gt;: 组织 70 余人规模的内部 AI Bootcamp，提升全行 AI 工具采用率。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;ai-camp-incorporated--ai-camp-instructor&#34;&gt;&lt;strong&gt;AI Camp Incorporated&lt;/strong&gt; | AI Camp Instructor&lt;/h3&gt;&#xA;&lt;p&gt;&lt;em&gt;2021 | Palo Alto, CA (Remote)&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>测试用</title>
+      <link>http://localhost:1313/posts/my-first-post/</link>
+      <pubDate>Sat, 20 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <description>&lt;p&gt;wow&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

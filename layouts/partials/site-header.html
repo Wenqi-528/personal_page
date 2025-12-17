@@ -1,0 +1,21 @@
+{{/* 直接强制指定背景图路径 */}}
+{{ $bg_image := "/image/background.png" }}
+
+<header class="cover bg-center" style="background-image: url('{{ $bg_image | absURL }}');">
+  {{/* bg-black-60 是遮罩层，pv3 pv4-l 缩小了 Banner 的高度 */}}
+  <div class="bg-black-60 pv3 pv4-l">
+    {{ partial "site-navigation.html" . }}
+    
+    <div class="tc-l ph3 ph4-ns">
+      {{/* 只有非首页才显示巨大标题，首页保持清爽 */}}
+      {{ if not .IsHome }}
+        <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">
+          {{ .Title }}
+        </h1>
+      {{ else }}
+        {{/* 首页只留一个间距，突出背景图和导航 */}}
+        <div class="pv4"></div>
+      {{ end }}
+    </div>
+  </div>
+</header>

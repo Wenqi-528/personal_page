@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>我的实战项目 on Wenqi_Zhou的个人page</title>
+    <link>http://localhost:1313/projects/</link>
+    <description>Recent content in 我的实战项目 on Wenqi_Zhou的个人page</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 17 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fin-SQL-Optimizer: 金融 Text-to-SQL 的 CoT 蒸馏实践</title>
+      <link>http://localhost:1313/projects/cotprojects/</link>
+      <pubDate>Wed, 17 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/cotprojects/</guid>
+      <description>通过端到端思维链（CoT）构造方案，配合工业级 SQL 执行沙箱校验，实现了从逻辑推导到结果验证的完整闭环，显著提升了模型在复杂金融场景下的 SQL 生成准确率。</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Fin-SQL-Optimizer: 金融 Text-to-SQL 的 CoT 蒸馏实践 | Wenqi_Zhou的个人page</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="深度对比补全法与推导法，构建 0 噪声的金融 SQL 推理数据集。">
+    <meta name="generator" content="Hugo 0.152.2">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+  
+    <link rel="stylesheet" href="/css/custom.css">
+  
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/projects/cotprojects/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/projects/cotprojects/">
+  <meta property="og:site_name" content="Wenqi_Zhou的个人page">
+  <meta property="og:title" content="Fin-SQL-Optimizer: 金融 Text-to-SQL 的 CoT 蒸馏实践">
+  <meta property="og:description" content="深度对比补全法与推导法，构建 0 噪声的金融 SQL 推理数据集。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="projects">
+    <meta property="article:published_time" content="2025-12-17T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-17T00:00:00+00:00">
+
+  <meta itemprop="name" content="Fin-SQL-Optimizer: 金融 Text-to-SQL 的 CoT 蒸馏实践">
+  <meta itemprop="description" content="深度对比补全法与推导法，构建 0 噪声的金融 SQL 推理数据集。">
+  <meta itemprop="datePublished" content="2025-12-17T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-12-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="148">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Fin-SQL-Optimizer: 金融 Text-to-SQL 的 CoT 蒸馏实践">
+  <meta name="twitter:description" content="深度对比补全法与推导法，构建 0 噪声的金融 SQL 推理数据集。">
+
+	
+  </head><body class="ma0 avenir bg-near-white development">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        Wenqi_Zhou的个人page
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white white-90 no-underline" href="/about/" title="关于我 page">
+              关于我
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white white-90 no-underline" href="/projects/" title="项目作品 page">
+              项目作品
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white white-90 no-underline" href="/posts/" title="技术随笔 page">
+              技术随笔
+            </a>
+          </li>
+          
+        </ul>
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        我的实战项目
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">Fin-SQL-Optimizer: 金融 Text-to-SQL 的 CoT 蒸馏实践</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2025-12-17T00:00:00Z">December 17, 2025</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><h2 id="-项目核心动机">💡 项目核心动机</h2>
+<p>在处理金融领域的 <strong>Text-to-SQL</strong> 任务时，模型常面临“逻辑断层”：</p>
+<ol>
+<li><strong>简单生成</strong>：模型直接给出 SQL，但在处理复杂的跨表票据计算时，准确率不足。</li>
+<li><strong>评估困境</strong>：仅靠字符串比对无法判定 SQL 的正确性，必须回归到<strong>数据执行层面</strong>。</li>
+</ol>
+<p>本项目通过 <strong>端到端 CoT 构造方案</strong> 与 <strong>工业级 SQL 执行沙箱</strong>，实现了一套从原始问答对到高性能蒸馏数据的自动化闭环。</p>
+<hr>
+<h2 id="-技术深度解析">🛠️ 技术深度解析</h2>
+<h3 id="1-cot-构造方案对比与选型">1. CoT 构造方案对比与选型</h3>
+<p>我深入研究了两套思维链构造方案，并基于<strong>蒸馏需求</strong>进行了选型：</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">维度</th>
+          <th style="text-align: left">方案一：Post-hoc CoT</th>
+          <th style="text-align: left">方案二：End-to-End CoT (本项目采用)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>流程</strong></td>
+          <td style="text-align: left">$Query + SQL \rightarrow CoT$</td>
+          <td style="text-align: left">$Query \rightarrow CoT + SQL$</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>因果性</strong></td>
+          <td style="text-align: left">SQL 引导逻辑（可能马后炮）</td>
+          <td style="text-align: left"><strong>逻辑推导结果（因果关系强）</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>蒸馏价值</strong></td>
+          <td style="text-align: left">较低，难以迁移推理分布</td>
+          <td style="text-align: left"><strong>极高，适合学生模型模仿思维模式</strong></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>控制难度</strong></td>
+          <td style="text-align: left">简单</td>
+          <td style="text-align: left">困难（需处理 SQL 错误与逻辑偏差）</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="2-自动化执行评测沙箱-the-evaluation-sandbox">2. 自动化执行评测沙箱 (The Evaluation Sandbox)</h3>
+<p>为了解决方案二带来的质量波动，我开发了一套 Python 高级评测脚本，核心逻辑包括：</p>
+<ul>
+<li>
+<p><strong>多维相似度量化</strong>：
+$$Score = 0.5 \cdot RowSim + 0.3 \cdot ColSim + 0.2 \cdot MatchRatio$$
+突破了传统的完全相等匹配，能够识别出“字段重命名”或“排序差异”但结果正确的 SQL。</p>
+</li>
+<li>
+<p><strong>列拆分与子集匹配</strong>：
+针对金融场景中常见的字段合并/拆分问题，脚本内置了 <code>advanced_column_split_match</code> 逻辑，能够通过组合搜索算法验证模型输出的字段集合。</p>
+</li>
+<li>
+<p><strong>健壮性设计</strong>：</p>
+<ul>
+<li><strong>多进程 Pool 隔离</strong>：防止恶意或死循环 SQL 拖垮评测进程。</li>
+<li><strong>自动 Checkpoint</strong>：支持大规模数据集的断点续传。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="-工程实践产出">📊 工程实践产出</h2>
+<ul>
+<li><strong>数据利用率优化</strong>：通过 <code>subset_matching</code> 和模糊匹配算法，将有效数据的挽救率提升了 <strong>15%</strong>。</li>
+<li><strong>训练集纯度</strong>：自动过滤执行报错和逻辑断裂的样本，为模型蒸馏提供了近乎 0 噪声的训练语料。</li>
+<li><strong>性能监控</strong>：实现了对 SQL 执行耗时、数值精度、容差范围（$1e^{-6}$）的全面监控。</li>
+</ul>
+<hr>
+<h2 id="-核心脚本架构展示">💻 核心脚本架构展示</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 脚本核心：多维相似度计算片段</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">improved_similarity_calculation</span>(answer_rows, output_rows):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 1. 执行高级行匹配 (Advanced Row Matching)</span>
+</span></span><span style="display:flex;"><span>    is_match, match_info <span style="color:#f92672">=</span> advanced_row_matching(answer_rows, output_rows, match_threshold<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2. 计算列相似度 (Column-wise Similarity)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># ... (基于 Pandas 的高效列对齐算法)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 3. 加权得分计算</span>
+</span></span><span style="display:flex;"><span>    similarity_score <span style="color:#f92672">=</span> float(<span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> row_similarity <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.3</span> <span style="color:#f92672">*</span> col_similarity <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.2</span> <span style="color:#f92672">*</span> match_ratio)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> similarity_score
+</span></span></code></pre></div><ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div></article>
+
+    </main>
+    <footer class="bg-black-60 bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  Wenqi_Zhou的个人page 2025 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

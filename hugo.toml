@@ -1,0 +1,36 @@
+baseURL = 'https://example.org/'
+languageCode = 'zh-CN'
+title = 'Wenqi_Zhou的个人page'
+theme = 'ananke'
+
+# 1. 导航菜单配置
+[[menu.main]]
+  name = "关于我"
+  url = "/about/"
+  weight = 5
+
+[[menu.main]]
+  name = "项目作品"
+  url = "/projects/"
+  weight = 10
+
+[[menu.main]]
+  name = "技术随笔"
+  url = "/posts/"
+  weight = 20
+
+# 2. 所有的全局变量统一放在这一个 [params] 下
+[params]
+  # 图片路径：确保 static/image/background.png 存在
+  featured_image = "/image/background.png"
+  
+  # 内容控制
+  mainSections = ["posts", "projects"]
+  recent_posts_number = 6 
+
+  # 视觉控制
+  hide_site_title_on_home = true
+  background_color_class = "bg-black-60"
+  
+  # 自定义 CSS：确保 static/css/custom.css 存在
+  custom_css = ["css/custom.css"]
