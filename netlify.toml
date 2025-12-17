@@ -1,0 +1,9 @@
+[build]
+  publish = "public"
+  command = "hugo"
+
+[build.environment]
+  # 必须与你本地 Hugo 版本一致
+  HUGO_VERSION = "0.152.2"
+  # Ananke 主题通常需要 extended 版本来处理某些资源
+  HUGO_ENV = "production"
