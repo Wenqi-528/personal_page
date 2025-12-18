@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>WHY NLP2SQL: 基于 Function Call 的金融智能查询助手 | Wenqi_Zhou的个人page</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="🌟 项目综述
+在金融业务场景中，非技术人员（理财经理、风控分析师）面临着极高的取数门槛。传统的 Text-to-SQL 方案由于 LLM 的“幻觉”问题，直接生成的 SQL 往往存在字段名错误或逻辑陷阱。
+本项目作为智图 WHY 工具课程建设的核心案例，主导设计了一套基于 Function Call (工具调用) 的混合驱动架构。该架构将 LLM 定位为“意图解析器”而非“代码生成器”，通过调用标准化的后端函数，确保了金融数据查询的 100% 准确性 与 安全性。
+
+🛠️ 核心技术实现：从“幻觉生成”到“确定性调用”
+1. Function Call 逻辑架构设计
+我将查询过程拆解为三个关键环节，通过定义严格的 JSON Schema 约束模型输出：
+
+语义解析层：利用 LLM 识别用户问题中的核心实体（如：分行、产品代码）和指标意图（如：余额、逾期率）。
+函数触发层：模型不输出 SQL，而是输出一个结构化的 JSON 指令，调用我定义的 get_financial_data() 函数。
+逻辑校验层：后端代码接收到 JSON 参数后，通过预设的 SQL 模板库进行动态拼装，彻底杜绝了全表扫描等高风险操作。
+
+2. 精细化的 Schema 定义 (PM 的核心产出)
+为了确保 Function Call 的成功率，我主导设计了如下 Schema 结构，重点在于对枚举值（Enum）的严格控制：
+{
+  &#34;name&#34;: &#34;query_bank_metrics&#34;,
+  &#34;description&#34;: &#34;用于查询招商银行分行维度的业务指标数据&#34;,
+  &#34;parameters&#34;: {
+    &#34;type&#34;: &#34;object&#34;,
+    &#34;properties&#34;: {
+      &#34;region&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;description&#34;: &#34;分行名称，如：北京分行, 深圳分行&#34; },
+      &#34;metric&#34;: { 
+        &#34;type&#34;: &#34;string&#34;, 
+        &#34;enum&#34;: [&#34;AUM&#34;, &#34;活期存款&#34;, &#34;贷款余额&#34;, &#34;不良率&#34;],
+        &#34;description&#34;: &#34;业务核心指标名称&#34; 
+      },
+      &#34;time_frame&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;description&#34;: &#34;时间区间，支持 YTD, Q3, M10 等格式&#34; }
+    },
+    &#34;required&#34;: [&#34;region&#34;, &#34;metric&#34;]
+  }
+}
+">
+    <meta name="generator" content="Hugo 0.152.2">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+  
+    <link rel="stylesheet" href="/css/custom.css">
+  
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/projects/nlpassistant/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/projects/nlpassistant/">
+  <meta property="og:site_name" content="Wenqi_Zhou的个人page">
+  <meta property="og:title" content="WHY NLP2SQL: 基于 Function Call 的金融智能查询助手">
+  <meta property="og:description" content="🌟 项目综述 在金融业务场景中，非技术人员（理财经理、风控分析师）面临着极高的取数门槛。传统的 Text-to-SQL 方案由于 LLM 的“幻觉”问题，直接生成的 SQL 往往存在字段名错误或逻辑陷阱。
+本项目作为智图 WHY 工具课程建设的核心案例，主导设计了一套基于 Function Call (工具调用) 的混合驱动架构。该架构将 LLM 定位为“意图解析器”而非“代码生成器”，通过调用标准化的后端函数，确保了金融数据查询的 100% 准确性 与 安全性。
+🛠️ 核心技术实现：从“幻觉生成”到“确定性调用” 1. Function Call 逻辑架构设计 我将查询过程拆解为三个关键环节，通过定义严格的 JSON Schema 约束模型输出：
+语义解析层：利用 LLM 识别用户问题中的核心实体（如：分行、产品代码）和指标意图（如：余额、逾期率）。 函数触发层：模型不输出 SQL，而是输出一个结构化的 JSON 指令，调用我定义的 get_financial_data() 函数。 逻辑校验层：后端代码接收到 JSON 参数后，通过预设的 SQL 模板库进行动态拼装，彻底杜绝了全表扫描等高风险操作。 2. 精细化的 Schema 定义 (PM 的核心产出) 为了确保 Function Call 的成功率，我主导设计了如下 Schema 结构，重点在于对枚举值（Enum）的严格控制：
+{ &#34;name&#34;: &#34;query_bank_metrics&#34;, &#34;description&#34;: &#34;用于查询招商银行分行维度的业务指标数据&#34;, &#34;parameters&#34;: { &#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: { &#34;region&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;description&#34;: &#34;分行名称，如：北京分行, 深圳分行&#34; }, &#34;metric&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;enum&#34;: [&#34;AUM&#34;, &#34;活期存款&#34;, &#34;贷款余额&#34;, &#34;不良率&#34;], &#34;description&#34;: &#34;业务核心指标名称&#34; }, &#34;time_frame&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;description&#34;: &#34;时间区间，支持 YTD, Q3, M10 等格式&#34; } }, &#34;required&#34;: [&#34;region&#34;, &#34;metric&#34;] } }">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="projects">
+    <meta property="article:published_time" content="2025-12-17T10:00:00+08:00">
+    <meta property="article:modified_time" content="2025-12-17T10:00:00+08:00">
+
+  <meta itemprop="name" content="WHY NLP2SQL: 基于 Function Call 的金融智能查询助手">
+  <meta itemprop="description" content="🌟 项目综述 在金融业务场景中，非技术人员（理财经理、风控分析师）面临着极高的取数门槛。传统的 Text-to-SQL 方案由于 LLM 的“幻觉”问题，直接生成的 SQL 往往存在字段名错误或逻辑陷阱。
+本项目作为智图 WHY 工具课程建设的核心案例，主导设计了一套基于 Function Call (工具调用) 的混合驱动架构。该架构将 LLM 定位为“意图解析器”而非“代码生成器”，通过调用标准化的后端函数，确保了金融数据查询的 100% 准确性 与 安全性。
+🛠️ 核心技术实现：从“幻觉生成”到“确定性调用” 1. Function Call 逻辑架构设计 我将查询过程拆解为三个关键环节，通过定义严格的 JSON Schema 约束模型输出：
+语义解析层：利用 LLM 识别用户问题中的核心实体（如：分行、产品代码）和指标意图（如：余额、逾期率）。 函数触发层：模型不输出 SQL，而是输出一个结构化的 JSON 指令，调用我定义的 get_financial_data() 函数。 逻辑校验层：后端代码接收到 JSON 参数后，通过预设的 SQL 模板库进行动态拼装，彻底杜绝了全表扫描等高风险操作。 2. 精细化的 Schema 定义 (PM 的核心产出) 为了确保 Function Call 的成功率，我主导设计了如下 Schema 结构，重点在于对枚举值（Enum）的严格控制：
+{ &#34;name&#34;: &#34;query_bank_metrics&#34;, &#34;description&#34;: &#34;用于查询招商银行分行维度的业务指标数据&#34;, &#34;parameters&#34;: { &#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: { &#34;region&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;description&#34;: &#34;分行名称，如：北京分行, 深圳分行&#34; }, &#34;metric&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;enum&#34;: [&#34;AUM&#34;, &#34;活期存款&#34;, &#34;贷款余额&#34;, &#34;不良率&#34;], &#34;description&#34;: &#34;业务核心指标名称&#34; }, &#34;time_frame&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;description&#34;: &#34;时间区间，支持 YTD, Q3, M10 等格式&#34; } }, &#34;required&#34;: [&#34;region&#34;, &#34;metric&#34;] } }">
+  <meta itemprop="datePublished" content="2025-12-17T10:00:00+08:00">
+  <meta itemprop="dateModified" content="2025-12-17T10:00:00+08:00">
+  <meta itemprop="wordCount" content="106">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="WHY NLP2SQL: 基于 Function Call 的金融智能查询助手">
+  <meta name="twitter:description" content="🌟 项目综述 在金融业务场景中，非技术人员（理财经理、风控分析师）面临着极高的取数门槛。传统的 Text-to-SQL 方案由于 LLM 的“幻觉”问题，直接生成的 SQL 往往存在字段名错误或逻辑陷阱。
+本项目作为智图 WHY 工具课程建设的核心案例，主导设计了一套基于 Function Call (工具调用) 的混合驱动架构。该架构将 LLM 定位为“意图解析器”而非“代码生成器”，通过调用标准化的后端函数，确保了金融数据查询的 100% 准确性 与 安全性。
+🛠️ 核心技术实现：从“幻觉生成”到“确定性调用” 1. Function Call 逻辑架构设计 我将查询过程拆解为三个关键环节，通过定义严格的 JSON Schema 约束模型输出：
+语义解析层：利用 LLM 识别用户问题中的核心实体（如：分行、产品代码）和指标意图（如：余额、逾期率）。 函数触发层：模型不输出 SQL，而是输出一个结构化的 JSON 指令，调用我定义的 get_financial_data() 函数。 逻辑校验层：后端代码接收到 JSON 参数后，通过预设的 SQL 模板库进行动态拼装，彻底杜绝了全表扫描等高风险操作。 2. 精细化的 Schema 定义 (PM 的核心产出) 为了确保 Function Call 的成功率，我主导设计了如下 Schema 结构，重点在于对枚举值（Enum）的严格控制：
+{ &#34;name&#34;: &#34;query_bank_metrics&#34;, &#34;description&#34;: &#34;用于查询招商银行分行维度的业务指标数据&#34;, &#34;parameters&#34;: { &#34;type&#34;: &#34;object&#34;, &#34;properties&#34;: { &#34;region&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;description&#34;: &#34;分行名称，如：北京分行, 深圳分行&#34; }, &#34;metric&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;enum&#34;: [&#34;AUM&#34;, &#34;活期存款&#34;, &#34;贷款余额&#34;, &#34;不良率&#34;], &#34;description&#34;: &#34;业务核心指标名称&#34; }, &#34;time_frame&#34;: { &#34;type&#34;: &#34;string&#34;, &#34;description&#34;: &#34;时间区间，支持 YTD, Q3, M10 等格式&#34; } }, &#34;required&#34;: [&#34;region&#34;, &#34;metric&#34;] } }">
+
+	
+  </head><body class="ma0 avenir bg-near-white development">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        Wenqi_Zhou的个人page
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white white-90 no-underline" href="/about/" title="关于我 page">
+              关于我
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white white-90 no-underline" href="/projects/" title="项目作品 page">
+              项目作品
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white white-90 no-underline" href="/posts/" title="技术随笔 page">
+              技术随笔
+            </a>
+          </li>
+          
+        </ul>
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        我的实战项目
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">WHY NLP2SQL: 基于 Function Call 的金融智能查询助手</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2025-12-17T10:00:00+08:00">December 17, 2025</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><h2 id="-项目综述">🌟 项目综述</h2>
+<p>在金融业务场景中，非技术人员（理财经理、风控分析师）面临着极高的取数门槛。传统的 Text-to-SQL 方案由于 LLM 的“幻觉”问题，直接生成的 SQL 往往存在字段名错误或逻辑陷阱。</p>
+<p>本项目作为<strong>智图 WHY 工具课程建设</strong>的核心案例，主导设计了一套基于 <strong>Function Call (工具调用)</strong> 的混合驱动架构。该架构将 LLM 定位为“意图解析器”而非“代码生成器”，通过调用标准化的后端函数，确保了金融数据查询的 <strong>100% 准确性</strong> 与 <strong>安全性</strong>。</p>
+<hr>
+<h2 id="-核心技术实现从幻觉生成到确定性调用">🛠️ 核心技术实现：从“幻觉生成”到“确定性调用”</h2>
+<h3 id="1-function-call-逻辑架构设计">1. Function Call 逻辑架构设计</h3>
+<p>我将查询过程拆解为三个关键环节，通过定义严格的 JSON Schema 约束模型输出：</p>
+<ul>
+<li><strong>语义解析层</strong>：利用 LLM 识别用户问题中的核心实体（如：分行、产品代码）和指标意图（如：余额、逾期率）。</li>
+<li><strong>函数触发层</strong>：模型不输出 SQL，而是输出一个结构化的 <code>JSON</code> 指令，调用我定义的 <code>get_financial_data()</code> 函数。</li>
+<li><strong>逻辑校验层</strong>：后端代码接收到 JSON 参数后，通过预设的 SQL 模板库进行动态拼装，彻底杜绝了全表扫描等高风险操作。</li>
+</ul>
+<h3 id="2-精细化的-schema-定义-pm-的核心产出">2. 精细化的 Schema 定义 (PM 的核心产出)</h3>
+<p>为了确保 Function Call 的成功率，我主导设计了如下 Schema 结构，重点在于对枚举值（Enum）的严格控制：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;query_bank_metrics&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;用于查询招商银行分行维度的业务指标数据&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;parameters&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;region&#34;</span>: { <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>, <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;分行名称，如：北京分行, 深圳分行&#34;</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;metric&#34;</span>: { 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;enum&#34;</span>: [<span style="color:#e6db74">&#34;AUM&#34;</span>, <span style="color:#e6db74">&#34;活期存款&#34;</span>, <span style="color:#e6db74">&#34;贷款余额&#34;</span>, <span style="color:#e6db74">&#34;不良率&#34;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;业务核心指标名称&#34;</span> 
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;time_frame&#34;</span>: { <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>, <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;时间区间，支持 YTD, Q3, M10 等格式&#34;</span> }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;required&#34;</span>: [<span style="color:#e6db74">&#34;region&#34;</span>, <span style="color:#e6db74">&#34;metric&#34;</span>]
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div></article>
+
+    </main>
+    <footer class="bg-black-60 bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  Wenqi_Zhou的个人page 2025 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

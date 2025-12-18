@@ -25,8 +25,8 @@ theme = 'ananke'
   featured_image = "/image/background.png"
   
   # 内容控制
-  mainSections = ["posts", "projects"]
-  recent_posts_number = 6 
+  mainSections = [ "projects","posts"]
+  recent_posts_number = 10
 
   # 视觉控制
   hide_site_title_on_home = true
